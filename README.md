@@ -1,6 +1,8 @@
 YSSegmentedControl
 ==================
 
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
+
 Android style segmented control written in swift.  
 Fully customisable.  
 
@@ -22,6 +24,8 @@ Copy & paste `YSSegmentedControl.swift` in your project
 use_frameworks!
 pod 'YSSegmentedControl'
 ```
+
+(for Swift 3, use `pod 'YSSegmentedControl', "~> 0.4"` instead)
 
 Usage
 -----
