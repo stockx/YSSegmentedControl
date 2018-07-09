@@ -25,6 +25,7 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var bottomLineHeightValueLabel: UILabel!
     
     @IBOutlet weak var shouldEvenlySpaceItemsHorizontallySwitch: UISwitch!
+    @IBOutlet weak var SelectorWidthEqualsTextWidthSwitch: UISwitch!
     
     // MARK: Lifecycle
     
@@ -102,6 +103,11 @@ class TableViewController: UITableViewController {
         segmented.viewState = viewState
     }
     
+    @IBAction func didToggleSelectorWidthEqualsTextWidth(_ sender: UISwitch) {
+        var viewState = segmented.viewState
+        viewState.selectorWidthEqualsTextWidth = sender.isOn
+        segmented.viewState = viewState
+    }
     // MARK: Helpers
     
     func updateAppearanceConfigurationUI() {
