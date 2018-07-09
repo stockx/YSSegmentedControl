@@ -63,7 +63,7 @@ public struct YSSegmentedControlViewState {
     /**
      swag on u
     */
-    public var shouldUseSpacer: Bool
+    public var selectorWidthEqualsTextWidth: Bool
     
     init() {
         backgroundColor = .clear
@@ -79,7 +79,7 @@ public struct YSSegmentedControlViewState {
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
         titles = []
-        shouldUseSpacer = true
+        selectorWidthEqualsTextWidth = false
     }
 }
 
@@ -378,24 +378,29 @@ public class YSSegmentedControl: UIView {
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.top])
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.leading, .trailing])
         }
-        var currentX: CGFloat = 0
+        
+        let width = frame.width / CGFloat(items.count)
+        
         // Constrain all the items
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             
             // Horizontal constraints
-            print(index)
+
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
+                
+                if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.selectorWidthEqualsTextWidth {
+                    item.makeAttribute(.width, equalTo: width)
+                }
             }
             // Middle or last
             else {
                 let previousItem = items[index - 1]
                 
                 if viewState.shouldEvenlySpaceItemsHorizontally {
-                    
-                    if !viewState.shouldUseSpacer  {
+                    if viewState.selectorWidthEqualsTextWidth {
                         let newSpacerView = UIView()
                         newSpacerView.translatesAutoresizingMaskIntoConstraints = false
                         scrollView.addSubview(newSpacerView)
@@ -416,20 +421,13 @@ public class YSSegmentedControl: UIView {
                         if spacerViews.count > 1 {
                             let previousSpacerView = spacerViews[spacerViews.count - 2]
                             newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
+                            
                         }
                     }
                     else {
-                        //let width = frame.size.width / CGFloat(viewState.titles.count)
-                        let width = frame.size.width / CGFloat(items.count)
-                        item.frame = CGRect(
-                            x: currentX,
-                            y: 0,
-                            width: width,
-                            height: frame.size.height)
-                        currentX += width
-                        print(currentX)
+                        item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
+                        item.makeAttribute(.width, equalTo: width)
                     }
-                    
                 }
                 else {
                     item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
