@@ -63,7 +63,7 @@ public struct YSSegmentedControlViewState {
     /**
      swag on u
     */
-    public var shouldUseSpacer: Bool
+    public var selectorWidthEqualsTextWidth: Bool
     
     init() {
         backgroundColor = .clear
@@ -79,7 +79,7 @@ public struct YSSegmentedControlViewState {
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
         titles = []
-        shouldUseSpacer = true
+        selectorWidthEqualsTextWidth = false
     }
 }
 
@@ -384,19 +384,21 @@ public class YSSegmentedControl: UIView {
         var currentX: CGFloat = 0
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
-            
-            // Horizontal constraints
+    
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
+                
+                if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.selectorWidthEqualsTextWidth {
+                    item.makeAttribute(.width, equalTo: width)
+                }
             }
             // Middle or last
             else {
                 let previousItem = items[index - 1]
                 
                 if viewState.shouldEvenlySpaceItemsHorizontally {
-                    
-                    if !viewState.shouldUseSpacer  {
+                    if viewState.selectorWidthEqualsTextWidth {
                         let newSpacerView = UIView()
                         newSpacerView.translatesAutoresizingMaskIntoConstraints = false
                         scrollView.addSubview(newSpacerView)
@@ -417,15 +419,13 @@ public class YSSegmentedControl: UIView {
                         if spacerViews.count > 1 {
                             let previousSpacerView = spacerViews[spacerViews.count - 2]
                             newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
+                            
                         }
                     }
                     else {
-                        spacerViews.removeAll()
-                        item.frame = CGRect(x: currentX, y: viewState.itemTopPadding, width: frame.width/CGFloat(items.count), height: frame.size.height - viewState.itemTopPadding)
-                        currentX += frame.width/CGFloat(items.count)
+                        item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
+                        item.makeAttribute(.width, equalTo: width)
                     }
-
-                    
                 }
                 else {
                     item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
@@ -449,7 +449,8 @@ public class YSSegmentedControl: UIView {
     private func update(_ oldViewState: YSSegmentedControlViewState) {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
-            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally {
+            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
+            oldViewState.selectorWidthEqualsTextWidth != viewState.selectorWidthEqualsTextWidth {
             
             // Remove all items
             removeItemsAndAssociatedViews()
