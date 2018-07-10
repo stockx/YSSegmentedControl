@@ -228,7 +228,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rdw-kH-LFh">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="didToggleShouldEvenlySpaceItemsHorizontallySwitch:" destination="DNs-Uf-ScM" eventType="valueChanged" id="Av2-hf-3wr"/>
+                                                        <action selector="didToggleShouldEvenlySpaceItemsHorizontallySwitch:" destination="DNs-Uf-ScM" eventType="valueChanged" id="NpA-0L-Eus"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -257,8 +257,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zaO-5n-sM9">
                                                     <rect key="frame" x="310" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="didToggleSelectorWidthEqualsTextWidth:" destination="DNs-Uf-ScM" eventType="valueChanged" id="eG1-BZ-eOS"/>
-                                                        <action selector="didToggleShouldEvenlySpaceItemsHorizontallySwitch:" destination="DNs-Uf-ScM" eventType="valueChanged" id="cLy-ep-ofP"/>
+                                                        <action selector="didToggleSelectorWidthEqualsTextWidth:" destination="DNs-Uf-ScM" eventType="valueChanged" id="MuT-26-2n2"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -281,7 +280,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="HIx-N7-63y"/>
                     <connections>
-                        <outlet property="SelectorWidthEqualsTextWidthSwitch" destination="zaO-5n-sM9" id="kjr-fg-GvN"/>
+                        <outlet property="SelectorWidthEqualsTextWidthSwitch" destination="zaO-5n-sM9" id="j8B-RG-e2K"/>
                         <outlet property="bottomLineHeightStepper" destination="B7B-D7-KVS" id="Acp-vh-Pno"/>
                         <outlet property="bottomLineHeightValueLabel" destination="kXB-Ho-zJj" id="m6B-33-8lL"/>
                         <outlet property="newTitleTextField" destination="6fh-Sl-k3T" id="A7J-Gv-0m6"/>
@@ -290,7 +289,7 @@
                         <outlet property="selectorOffsetFromLabelStepper" destination="5TY-It-D6n" id="4Qn-Sm-zl7"/>
                         <outlet property="selectorOffsetFromLabelSwitch" destination="hRx-s7-rUd" id="rMH-ic-hkg"/>
                         <outlet property="selectorOffsetFromLabelValueLabel" destination="Mzl-12-ShV" id="Xg1-hd-VEJ"/>
-                        <outlet property="shouldEvenlySpaceItemsHorizontallySwitch" destination="Rdw-kH-LFh" id="mnJ-g9-v3k"/>
+                        <outlet property="shouldEvenlySpaceItemsHorizontallySwitch" destination="Rdw-kH-LFh" id="ejk-jD-zym"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cig-mt-BGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
