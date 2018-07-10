@@ -63,7 +63,7 @@ public struct YSSegmentedControlViewState {
     /**
      swag on u
     */
-    public var selectorWidthEqualsTextWidth: Bool
+    public var hasSpacerViewBetweenEachItem: Bool
     
     init() {
         backgroundColor = .clear
@@ -79,7 +79,7 @@ public struct YSSegmentedControlViewState {
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
         titles = []
-        selectorWidthEqualsTextWidth = false
+        hasSpacerViewBetweenEachItem = false
     }
 }
 
@@ -452,7 +452,7 @@ public class YSSegmentedControl: UIView {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
             oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
-            oldViewState.selectorWidthEqualsTextWidth != viewState.selectorWidthEqualsTextWidth {
+            oldViewState.hasSpacerViewBetweenEachItem != viewState.hasSpacerViewBetweenEachItem {
             
             // Remove all items
             removeItemsAndAssociatedViews()

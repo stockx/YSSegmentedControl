@@ -248,7 +248,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SelectorWidthEqualsTextWidth" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I81-9D-haP">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hasSpacerViewBetweenEachItem" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I81-9D-haP">
                                                     <rect key="frame" x="16" y="12" width="282" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -280,9 +280,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="HIx-N7-63y"/>
                     <connections>
-                        <outlet property="SelectorWidthEqualsTextWidthSwitch" destination="zaO-5n-sM9" id="j8B-RG-e2K"/>
                         <outlet property="bottomLineHeightStepper" destination="B7B-D7-KVS" id="Acp-vh-Pno"/>
                         <outlet property="bottomLineHeightValueLabel" destination="kXB-Ho-zJj" id="m6B-33-8lL"/>
+                        <outlet property="hasSpacerViewBetweenEachItem" destination="zaO-5n-sM9" id="j8B-RG-e2K"/>
                         <outlet property="newTitleTextField" destination="6fh-Sl-k3T" id="A7J-Gv-0m6"/>
                         <outlet property="offsetBetweenTitlesValueLabel" destination="hQV-vD-bPB" id="YyW-DF-c3F"/>
                         <outlet property="offsetBewteenTitlesStepper" destination="8ej-WI-ewh" id="3xN-kl-97F"/>
