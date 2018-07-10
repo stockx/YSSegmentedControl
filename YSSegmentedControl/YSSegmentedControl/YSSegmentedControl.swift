@@ -61,7 +61,13 @@ public struct YSSegmentedControlViewState {
     public var titles: [String]
     
     /**
-     swag on u
+     Boolean to check whether to have extra space between each item.
+     
+     If this is set to true there will be a spacer view between
+     the trailing edge of the previous item and the leading edge of the
+     current item.
+     
+     Defaults to false
     */
     public var hasSpacerViewBetweenEachItem: Bool
     
