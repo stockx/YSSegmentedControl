@@ -386,47 +386,39 @@ public class YSSegmentedControl: UIView {
             item.translatesAutoresizingMaskIntoConstraints = false
             
             // Horizontal constraints
-
+            if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.hasSpacerViewBetweenEachItem {
+                item.makeAttribute(.width, equalTo: width)
+            }
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
-                
-                if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.selectorWidthEqualsTextWidth {
-                    item.makeAttribute(.width, equalTo: width)
-                }
+
             }
-            // Middle or last
             else {
                 let previousItem = items[index - 1]
                 
-                if viewState.shouldEvenlySpaceItemsHorizontally {
-                    if viewState.selectorWidthEqualsTextWidth {
-                        let newSpacerView = UIView()
-                        newSpacerView.translatesAutoresizingMaskIntoConstraints = false
-                        scrollView.addSubview(newSpacerView)
-                        spacerViews.append(newSpacerView)
+                if viewState.shouldEvenlySpaceItemsHorizontally && viewState.hasSpacerViewBetweenEachItem {
+                    let newSpacerView = UIView()
+                    newSpacerView.translatesAutoresizingMaskIntoConstraints = false
+                    scrollView.addSubview(newSpacerView)
+                    spacerViews.append(newSpacerView)
+                    
+                    newSpacerView.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
+                    newSpacerView.makeAttribute(.trailing, equalToOtherView: item, attribute: .leading)
+                    _ = newSpacerView.makeConstraint(for: .height, equalTo: 0)
+                    newSpacerView.makeAttribute(.centerY, equalToOtherView: previousItem, attribute: .centerY)
+                    scrollView.addConstraint(NSLayoutConstraint(item: newSpacerView,
+                                                                attribute: .width,
+                                                                relatedBy: .greaterThanOrEqual,
+                                                                toItem: nil,
+                                                                attribute: .notAnAttribute,
+                                                                multiplier: 1.0,
+                                                                constant: 10))
+                    
+                    if spacerViews.count > 1 {
+                        let previousSpacerView = spacerViews[spacerViews.count - 2]
+                        newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
                         
-                        newSpacerView.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
-                        newSpacerView.makeAttribute(.trailing, equalToOtherView: item, attribute: .leading)
-                        _ = newSpacerView.makeConstraint(for: .height, equalTo: 0)
-                        newSpacerView.makeAttribute(.centerY, equalToOtherView: previousItem, attribute: .centerY)
-                        scrollView.addConstraint(NSLayoutConstraint(item: newSpacerView,
-                                                                    attribute: .width,
-                                                                    relatedBy: .greaterThanOrEqual,
-                                                                    toItem: nil,
-                                                                    attribute: .notAnAttribute,
-                                                                    multiplier: 1.0,
-                                                                    constant: 10))
-                        
-                        if spacerViews.count > 1 {
-                            let previousSpacerView = spacerViews[spacerViews.count - 2]
-                            newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
-                            
-                        }
-                    }
-                    else {
-                        item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
-                        item.makeAttribute(.width, equalTo: width)
                     }
                 }
                 else {
