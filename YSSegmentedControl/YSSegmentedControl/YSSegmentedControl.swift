@@ -384,21 +384,21 @@ public class YSSegmentedControl: UIView {
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.top])
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.leading, .trailing])
         }
-        
-        let width = frame.width / CGFloat(items.count)
-        
+
         // Constrain all the items
+        let width = frame.width / CGFloat(viewState.titles.count)
+
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
-            
+
             // Horizontal constraints
             if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.hasSpacerViewBetweenEachItem {
                 item.makeAttribute(.width, equalTo: width)
             }
+
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
-
             }
             else {
                 let previousItem = items[index - 1]
