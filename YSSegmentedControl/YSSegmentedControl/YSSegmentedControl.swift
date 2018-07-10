@@ -378,13 +378,14 @@ public class YSSegmentedControl: UIView {
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.top])
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.leading, .trailing])
         }
-        var currentX: CGFloat = 0
+
         // Constrain all the items
+        let width = frame.size.width / CGFloat(viewState.titles.count)
+        var currentX: CGFloat = 0
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             
             // Horizontal constraints
-            print(index)
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
@@ -419,16 +420,11 @@ public class YSSegmentedControl: UIView {
                         }
                     }
                     else {
-                        //let width = frame.size.width / CGFloat(viewState.titles.count)
-                        let width = frame.size.width / CGFloat(items.count)
-                        item.frame = CGRect(
-                            x: currentX,
-                            y: 0,
-                            width: width,
-                            height: frame.size.height)
-                        currentX += width
-                        print(currentX)
+                        spacerViews.removeAll()
+                        item.frame = CGRect(x: currentX, y: viewState.itemTopPadding, width: frame.width/CGFloat(items.count), height: frame.size.height - viewState.itemTopPadding)
+                        currentX += frame.width/CGFloat(items.count)
                     }
+
                     
                 }
                 else {
