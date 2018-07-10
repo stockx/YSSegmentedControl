@@ -97,6 +97,7 @@ extension UIView {
      Creates and applies a constraint to the receiver with attribute
      `attribute` and the specified constant, and returns the constraint.
      */
+    @discardableResult
     func makeConstraint(for attribute: NSLayoutAttribute, equalTo constant: CGFloat) -> NSLayoutConstraint? {
         guard let superview = superview else {
             return nil
