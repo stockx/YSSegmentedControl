@@ -451,7 +451,8 @@ public class YSSegmentedControl: UIView {
     private func update(_ oldViewState: YSSegmentedControlViewState) {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
-            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally {
+            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
+            oldViewState.selectorWidthEqualsTextWidth != viewState.selectorWidthEqualsTextWidth {
             
             // Remove all items
             removeItemsAndAssociatedViews()
