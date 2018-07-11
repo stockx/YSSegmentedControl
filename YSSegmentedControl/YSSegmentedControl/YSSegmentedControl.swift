@@ -182,6 +182,8 @@ class YSSegmentedControlItem: UIControl {
                                                       options: [],
                                                       metrics: nil,
                                                       views: views))
+        
+        label.textAlignment = .center
     }
     
     // MARK:- State
