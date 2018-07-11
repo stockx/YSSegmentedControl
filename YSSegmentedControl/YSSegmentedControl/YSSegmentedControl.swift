@@ -63,13 +63,13 @@ public struct YSSegmentedControlViewState {
     /**
      Boolean to check whether to have extra space between each item.
      
-     If this is set to true there will be a spacer view between
+     If this is set to true there will be an extra space between
      the trailing edge of the previous item and the leading edge of the
      current item.
      
      Defaults to false
     */
-    public var hasSpacerViewBetweenEachItem: Bool
+    public var haveExtraSpaceBetweenEachItem: Bool
     
     init() {
         backgroundColor = .clear
@@ -85,7 +85,7 @@ public struct YSSegmentedControlViewState {
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
         titles = []
-        hasSpacerViewBetweenEachItem = false
+        haveExtraSpaceBetweenEachItem = false
     }
 }
 
@@ -392,7 +392,7 @@ public class YSSegmentedControl: UIView {
             item.translatesAutoresizingMaskIntoConstraints = false
 
             // Horizontal constraints
-            if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.hasSpacerViewBetweenEachItem {
+            if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.haveExtraSpaceBetweenEachItem {
                 item.makeAttribute(.width, equalTo: width)
             }
 
@@ -403,7 +403,7 @@ public class YSSegmentedControl: UIView {
             else {
                 let previousItem = items[index - 1]
                 
-                if viewState.shouldEvenlySpaceItemsHorizontally && viewState.hasSpacerViewBetweenEachItem {
+                if viewState.shouldEvenlySpaceItemsHorizontally && viewState.haveExtraSpaceBetweenEachItem {
                     let newSpacerView = UIView()
                     newSpacerView.translatesAutoresizingMaskIntoConstraints = false
                     scrollView.addSubview(newSpacerView)
@@ -450,7 +450,7 @@ public class YSSegmentedControl: UIView {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
             oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
-            oldViewState.hasSpacerViewBetweenEachItem != viewState.hasSpacerViewBetweenEachItem {
+            oldViewState.haveExtraSpaceBetweenEachItem != viewState.haveExtraSpaceBetweenEachItem {
             
             // Remove all items
             removeItemsAndAssociatedViews()

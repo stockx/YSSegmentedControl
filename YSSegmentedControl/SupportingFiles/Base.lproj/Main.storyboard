@@ -282,7 +282,7 @@
                     <connections>
                         <outlet property="bottomLineHeightStepper" destination="B7B-D7-KVS" id="Acp-vh-Pno"/>
                         <outlet property="bottomLineHeightValueLabel" destination="kXB-Ho-zJj" id="m6B-33-8lL"/>
-                        <outlet property="hasSpacerViewBetweenEachItem" destination="zaO-5n-sM9" id="j8B-RG-e2K"/>
+                        <outlet property="haveExtraSpaceBetweenEachItemSwitch" destination="zaO-5n-sM9" id="j8B-RG-e2K"/>
                         <outlet property="newTitleTextField" destination="6fh-Sl-k3T" id="A7J-Gv-0m6"/>
                         <outlet property="offsetBetweenTitlesValueLabel" destination="hQV-vD-bPB" id="YyW-DF-c3F"/>
                         <outlet property="offsetBewteenTitlesStepper" destination="8ej-WI-ewh" id="3xN-kl-97F"/>
