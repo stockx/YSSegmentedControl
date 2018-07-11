@@ -124,6 +124,7 @@ class TableViewController: UITableViewController {
         bottomLineHeightValueLabel.text = "\(bottomLineHeightStepper.value)"
         
         shouldEvenlySpaceItemsHorizontallySwitch.isOn = segmented.viewState.shouldEvenlySpaceItemsHorizontally
+        haveExtraSpaceBetweenEachItemSwitch.isOn = segmented.viewState.haveExtraSpaceBetweenEachItem
     }
 }
 
