@@ -103,7 +103,7 @@ class TableViewController: UITableViewController {
         segmented.viewState = viewState
     }
     
-    @IBAction func didToggleSelectorWidthEqualsTextWidth(_ sender: UISwitch) {
+    @IBAction func didToggleHaveExtraSpaceBetweenEachItemSwitch(_ sender: UISwitch) {
         var viewState = segmented.viewState
         viewState.haveExtraSpaceBetweenEachItem = sender.isOn
         segmented.viewState = viewState
