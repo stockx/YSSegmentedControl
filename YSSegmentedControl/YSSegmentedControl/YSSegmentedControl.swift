@@ -400,6 +400,7 @@ public class YSSegmentedControl: UIView {
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
             }
+            //Middle or Last
             else {
                 let previousItem = items[index - 1]
                 
