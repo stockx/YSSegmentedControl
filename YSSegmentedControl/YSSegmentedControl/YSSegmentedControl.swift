@@ -340,7 +340,7 @@ public class YSSegmentedControl: UIView {
         // Re-Add all items
         for _ in viewState.titles {
             let item = YSSegmentedControlItem(
-                frame: CGRect(x: 0, y: 0, width: 100, height: 44),
+                frame: .zero,
                 willPress: { [weak self] segmentedControlItem in
                     guard let weakSelf = self else {
                         return
