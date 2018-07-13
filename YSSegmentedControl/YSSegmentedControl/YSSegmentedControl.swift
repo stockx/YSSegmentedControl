@@ -363,7 +363,7 @@ public class YSSegmentedControl: UIView {
             scrollView.addSubview(item)
             items.append(item)
         }
-        
+
         if viewState.shouldEvenlySpaceItemsHorizontally {
             scrollView.addSubview(horizontalScrollViewConstrainingView)
             
@@ -380,7 +380,7 @@ public class YSSegmentedControl: UIView {
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.top])
             horizontalScrollViewConstrainingView.makeAttributesEqualToSuperview([.leading, .trailing])
         }
-        
+
         // Constrain all the items
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
@@ -394,7 +394,7 @@ public class YSSegmentedControl: UIView {
                     item.makeAttribute(.width, equalTo: UIScreen.main.bounds.width / CGFloat(viewState.titles.count))
                 }
             }
-                // Middle or last
+            // Middle or last
             else {
                 let previousItem = items[index - 1]
                 if viewState.shouldEvenlySpaceItemsHorizontally {
