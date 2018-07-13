@@ -382,6 +382,7 @@ public class YSSegmentedControl: UIView {
         }
 
         // Constrain all the items
+        let width = self.frame.width / CGFloat(viewState.titles.count)
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             
@@ -391,7 +392,7 @@ public class YSSegmentedControl: UIView {
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
                 if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.shouldSelectorBeSameWidthAsText {
-                    item.makeAttribute(.width, equalTo: UIScreen.main.bounds.width / CGFloat(viewState.titles.count))
+                    item.makeAttribute(.width, equalTo: width)
                 }
             }
             // Middle or last
@@ -400,7 +401,7 @@ public class YSSegmentedControl: UIView {
                 if viewState.shouldEvenlySpaceItemsHorizontally {
                     if !viewState.shouldSelectorBeSameWidthAsText {
                         item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
-                        item.makeAttribute(.width, equalTo: UIScreen.main.bounds.width / CGFloat(viewState.titles.count))
+                        item.makeAttribute(.width, equalTo: width)
                     } else {
                         let newSpacerView = UIView()
                         newSpacerView.translatesAutoresizingMaskIntoConstraints = false
