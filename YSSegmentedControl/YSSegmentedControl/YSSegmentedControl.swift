@@ -397,11 +397,13 @@ public class YSSegmentedControl: UIView {
             // Middle or last
             else {
                 let previousItem = items[index - 1]
+                
                 if viewState.shouldEvenlySpaceItemsHorizontally {
                     if !viewState.shouldSelectorBeSameWidthAsText {
                         item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
                         item.makeAttribute(.width, equalTo: UIScreen.main.bounds.width / CGFloat(viewState.titles.count))
-                    } else {
+                    }
+                    else {
                         let newSpacerView = UIView()
                         newSpacerView.translatesAutoresizingMaskIntoConstraints = false
                         scrollView.addSubview(newSpacerView)
