@@ -382,7 +382,8 @@ public class YSSegmentedControl: UIView {
         }
 
         // Constrain all the items
-        let width = self.frame.width / CGFloat(viewState.titles.count)
+        let width = frame.width / CGFloat(viewState.titles.count)
+        
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             
@@ -398,6 +399,7 @@ public class YSSegmentedControl: UIView {
             // Middle or last
             else {
                 let previousItem = items[index - 1]
+                
                 if viewState.shouldEvenlySpaceItemsHorizontally {
                     if !viewState.shouldSelectorBeSameWidthAsText {
                         item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
