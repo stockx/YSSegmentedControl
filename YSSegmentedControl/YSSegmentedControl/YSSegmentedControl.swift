@@ -382,7 +382,8 @@ public class YSSegmentedControl: UIView {
         }
 
         // Constrain all the items
-        var width = UIScreen.main.bounds.width / CGFloat(viewState.titles.count)
+        let width = frame.width / CGFloat(viewState.titles.count)
+        
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             

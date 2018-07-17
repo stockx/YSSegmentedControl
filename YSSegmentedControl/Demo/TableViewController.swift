@@ -25,15 +25,13 @@ class TableViewController: UITableViewController {
     @IBOutlet weak var bottomLineHeightValueLabel: UILabel!
     
     @IBOutlet weak var shouldEvenlySpaceItemsHorizontallySwitch: UISwitch!
-    
+    @IBOutlet weak var shouldSelectorBeSameWidthAsTextSwitch: UISwitch!
     // MARK: Lifecycle
     
     let segmented = YSSegmentedControl(frame: .zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        segmented.frame = CGRect(x: 0, y: 64, width: view.frame.size.width, height: 44)
         
         var viewState = segmented.viewState
         
@@ -49,7 +47,14 @@ class TableViewController: UITableViewController {
         
         segmented.delegate = self
 
-        navigationItem.titleView = segmented
+        if let navBar = navigationController?.navigationBar {
+            segmented.frame = navBar.bounds
+            navBar.addSubview(segmented)
+        }
+        else {
+            segmented.frame = CGRect(x: 0, y: 64, width: view.frame.size.width, height: 44)
+            navigationItem.titleView = segmented
+        }
         
         updateAppearanceConfigurationUI()
     }
@@ -102,6 +107,11 @@ class TableViewController: UITableViewController {
         segmented.viewState = viewState
     }
     
+    @IBAction func didToggleshouldSelectorBeSameWidthAsTextSwitch(_ sender: UISwitch) {
+        var viewState = segmented.viewState
+        viewState.shouldSelectorBeSameWidthAsText = sender.isOn
+        segmented.viewState = viewState
+    }
     // MARK: Helpers
     
     func updateAppearanceConfigurationUI() {
