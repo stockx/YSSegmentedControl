@@ -56,6 +56,12 @@ public struct YSSegmentedControlViewState {
     public var shouldEvenlySpaceItemsHorizontally: Bool
     
     /**
+     Whether or not the selector should be the same size as the item text,
+     or a proportion of the screen
+     */
+    public var shouldSelectorBeSameWidthAsText: Bool
+    
+    /**
      The titles that show inside the segmented control.
      */
     public var titles: [String]
@@ -73,6 +79,7 @@ public struct YSSegmentedControlViewState {
         selectorOffsetFromLabel = nil
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
+        shouldSelectorBeSameWidthAsText = false
         titles = []
     }
 }
@@ -136,6 +143,7 @@ class YSSegmentedControlItem: UIControl {
     }
     
     private func commonInit() {
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         addSubview(label)
         
@@ -374,6 +382,7 @@ public class YSSegmentedControl: UIView {
         }
 
         // Constrain all the items
+        var width = UIScreen.main.bounds.width / CGFloat(viewState.titles.count)
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
             
@@ -382,32 +391,41 @@ public class YSSegmentedControl: UIView {
             // First
             if index == 0 {
                 item.makeAttributesEqualToSuperview([.leading])
+                if viewState.shouldEvenlySpaceItemsHorizontally && !viewState.shouldSelectorBeSameWidthAsText {
+                    item.makeAttribute(.width, equalTo: width)
+                }
             }
             // Middle or last
             else {
                 let previousItem = items[index - 1]
                 
                 if viewState.shouldEvenlySpaceItemsHorizontally {
-                    let newSpacerView = UIView()
-                    newSpacerView.translatesAutoresizingMaskIntoConstraints = false
-                    scrollView.addSubview(newSpacerView)
-                    spacerViews.append(newSpacerView)
-                    
-                    newSpacerView.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
-                    newSpacerView.makeAttribute(.trailing, equalToOtherView: item, attribute: .leading)
-                    _ = newSpacerView.makeConstraint(for: .height, equalTo: 0)
-                    newSpacerView.makeAttribute(.centerY, equalToOtherView: previousItem, attribute: .centerY)
-                    scrollView.addConstraint(NSLayoutConstraint(item: newSpacerView,
-                                                                attribute: .width,
-                                                                relatedBy: .greaterThanOrEqual,
-                                                                toItem: nil,
-                                                                attribute: .notAnAttribute,
-                                                                multiplier: 1.0,
-                                                                constant: 10))
-                    
-                    if spacerViews.count > 1 {
-                        let previousSpacerView = spacerViews[spacerViews.count - 2]
-                        newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
+                    if !viewState.shouldSelectorBeSameWidthAsText {
+                        item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
+                        item.makeAttribute(.width, equalTo: width)
+                    } else {
+                        let newSpacerView = UIView()
+                        newSpacerView.translatesAutoresizingMaskIntoConstraints = false
+                        scrollView.addSubview(newSpacerView)
+                        spacerViews.append(newSpacerView)
+                        
+                        newSpacerView.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
+                        newSpacerView.makeAttribute(.trailing, equalToOtherView: item, attribute: .leading)
+                        // _ = newSpacerView.makeConstraint(for: .height, equalTo: 0)
+                        newSpacerView.makeAttribute(.height, equalTo: 1)
+                        newSpacerView.makeAttribute(.centerY, equalToOtherView: previousItem, attribute: .centerY)
+                        scrollView.addConstraint(NSLayoutConstraint(item: newSpacerView,
+                                                                    attribute: .width,
+                                                                    relatedBy: .greaterThanOrEqual,
+                                                                    toItem: nil,
+                                                                    attribute: .notAnAttribute,
+                                                                    multiplier: 1.0,
+                                                                    constant: 10))
+                        
+                        if spacerViews.count > 1 {
+                            let previousSpacerView = spacerViews[spacerViews.count - 2]
+                            newSpacerView.makeAttribute(.width, equalToOtherView: previousSpacerView, attribute: .width)
+                        }
                     }
                 }
                 else {
@@ -432,7 +450,8 @@ public class YSSegmentedControl: UIView {
     private func update(_ oldViewState: YSSegmentedControlViewState) {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
-            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally {
+            oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
+            oldViewState.shouldSelectorBeSameWidthAsText != viewState.shouldSelectorBeSameWidthAsText {
             
             // Remove all items
             removeItemsAndAssociatedViews()
