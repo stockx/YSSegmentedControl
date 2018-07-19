@@ -65,7 +65,7 @@ class TableViewController: UITableViewController {
             self.segmented.frame.size.width = self.view.frame.width
             self.segmented.viewState.keyWindowWidth = self.view.frame.width
         }
-    
+        super.viewWillTransition(to: size, with: coordinator)
     }
     // MARK:- Actions
     
