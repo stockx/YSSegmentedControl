@@ -66,7 +66,6 @@ public struct YSSegmentedControlViewState {
      */
     public var keyWindowWidth: CGFloat
     
-    
     /**
      The titles that show inside the segmented control.
      */
