@@ -343,7 +343,6 @@ public class YSSegmentedControl: UIView {
      and then constrainign them properly based on the state).
      */
     private func layoutItems() {
-        // Re-Add all items
         for _ in viewState.titles {
             let item = YSSegmentedControlItem(
                 frame: .zero,

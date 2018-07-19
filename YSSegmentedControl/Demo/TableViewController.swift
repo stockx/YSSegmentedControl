@@ -59,12 +59,14 @@ class TableViewController: UITableViewController {
         updateAppearanceConfigurationUI()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        segmented.frame.size.width = view.frame.width
-        segmented.viewState.keyWindowWidth = view.frame.width
-    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animate(alongsideTransition: nil) { (_) in
+            self.segmented.frame.size.width = self.view.frame.width
+            self.segmented.viewState.keyWindowWidth = self.view.frame.width
+        }
     
+    }
     // MARK:- Actions
     
     @IBAction func didTapResetButton(_ sender: UIButton) {
