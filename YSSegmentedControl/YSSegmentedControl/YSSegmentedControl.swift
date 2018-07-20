@@ -62,6 +62,11 @@ public struct YSSegmentedControlViewState {
     public var shouldSelectorBeSameWidthAsText: Bool
     
     /**
+     Width of keywindow to support iPad multitasking
+     */
+    public var keyWindowWidth: CGFloat
+    
+    /**
      The titles that show inside the segmented control.
      */
     public var titles: [String]
@@ -80,6 +85,7 @@ public struct YSSegmentedControlViewState {
         offsetBetweenTitles = 48
         shouldEvenlySpaceItemsHorizontally = false
         shouldSelectorBeSameWidthAsText = false
+        keyWindowWidth = UIApplication.shared.keyWindow?.frame.width ?? UIScreen.main.bounds.width
         titles = []
     }
 }
@@ -337,7 +343,6 @@ public class YSSegmentedControl: UIView {
      and then constrainign them properly based on the state).
      */
     private func layoutItems() {
-        // Re-Add all items
         for _ in viewState.titles {
             let item = YSSegmentedControlItem(
                 frame: .zero,
@@ -382,7 +387,7 @@ public class YSSegmentedControl: UIView {
         }
 
         // Constrain all the items
-        let width = frame.width / CGFloat(viewState.titles.count)
+        let width = viewState.keyWindowWidth / CGFloat(viewState.titles.count)
         
         for (index, item) in items.enumerated() {
             item.translatesAutoresizingMaskIntoConstraints = false
@@ -452,7 +457,8 @@ public class YSSegmentedControl: UIView {
         // If the number of titles have changed, re-add all of the items.
         if oldViewState.titles.count != viewState.titles.count ||
             oldViewState.shouldEvenlySpaceItemsHorizontally != viewState.shouldEvenlySpaceItemsHorizontally ||
-            oldViewState.shouldSelectorBeSameWidthAsText != viewState.shouldSelectorBeSameWidthAsText {
+            oldViewState.shouldSelectorBeSameWidthAsText != viewState.shouldSelectorBeSameWidthAsText ||
+            oldViewState.keyWindowWidth != viewState.keyWindowWidth {
             
             // Remove all items
             removeItemsAndAssociatedViews()
