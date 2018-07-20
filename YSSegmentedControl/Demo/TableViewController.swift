@@ -60,11 +60,11 @@ class TableViewController: UITableViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
         coordinator.animate(alongsideTransition: nil) { (_) in
             self.segmented.frame.size.width = self.view.frame.width
             self.segmented.viewState.keyWindowWidth = self.view.frame.width
         }
+        
         super.viewWillTransition(to: size, with: coordinator)
     }
     // MARK:- Actions
