@@ -14,8 +14,8 @@ public struct YSSegmentedControlViewState {
     public var backgroundColor: UIColor
     public var selectedBackgroundColor: UIColor
     
-    public var unselectedTextAttributes: [NSAttributedStringKey : Any]
-    public var selectedTextAttributes: [NSAttributedStringKey : Any]
+    public var unselectedTextAttributes: [NSAttributedString.Key : Any]
+    public var selectedTextAttributes: [NSAttributedString.Key : Any]
     
     public var bottomLineColor: UIColor
     public var bottomLineHeight: CGFloat
@@ -100,7 +100,7 @@ class YSSegmentedControlItem: UIControl {
 
     struct ViewState {
         var title: String
-        var titleAttributes: [NSAttributedStringKey : Any]
+        var titleAttributes: [NSAttributedString.Key : Any]
         var horizontalTrailingOffset: CGFloat
         var backgroundColor: UIColor
         
