@@ -121,17 +121,17 @@
 			isa = PBXGroup;
 			children = (
 				B2A0ED221AE790290035992E /* YSSegmentedControlTests.swift */,
-				B2A0ED201AE790290035992E /* Supporting Files */,
+				B2A0ED201AE790290035992E /* SupportingFiles */,
 			);
 			path = YSSegmentedControlTests;
 			sourceTree = "<group>";
 		};
-		B2A0ED201AE790290035992E /* Supporting Files */ = {
+		B2A0ED201AE790290035992E /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
 				B2A0ED211AE790290035992E /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +197,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
