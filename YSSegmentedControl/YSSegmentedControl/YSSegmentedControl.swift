@@ -351,7 +351,7 @@ public class YSSegmentedControl: UIView {
                         return
                     }
                     
-                    let index = weakSelf.items.index(of: segmentedControlItem)!
+                    let index = weakSelf.items.firstIndex(of: segmentedControlItem)!
                     weakSelf.delegate?.segmentedControl(weakSelf, willPressItemAt: index)
                 },
                 didPress: { [weak self] segmentedControlItem in
@@ -359,7 +359,7 @@ public class YSSegmentedControl: UIView {
                         return
                     }
                     
-                    let index = weakSelf.items.index(of: segmentedControlItem)!
+                    let index = weakSelf.items.firstIndex(of: segmentedControlItem)!
                     weakSelf.selectItem(at: index, withAnimation: true)
                     weakSelf.action?(weakSelf, index)
                     weakSelf.delegate?.segmentedControl(weakSelf, didPressItemAt: index)
