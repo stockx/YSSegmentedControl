@@ -196,10 +196,9 @@
 			};
 			buildConfigurationList = B2A0ED021AE790280035992E /* Build configuration list for PBXProject "YSSegmentedControl" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
