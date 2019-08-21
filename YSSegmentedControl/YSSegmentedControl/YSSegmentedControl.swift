@@ -41,7 +41,7 @@ public struct YSSegmentedControlViewState {
     /**
      The horizontal distance between the trailing and leading edges of each title and its edges. 
      */
-    public var marginForTitles: CGFloat
+    public var horizontalMarginForTitles: CGFloat
     
     /**
      Whether or not the items should be evenly spaced horizontally,
@@ -76,6 +76,28 @@ public struct YSSegmentedControlViewState {
      */
     public var titles: [String]
     
+    /**
+     In case if `shouldEvenlySpaceItemsHorizontally` is set to true, returns true
+     Otherwise calculate if all the items with their inner spaces and margins 
+     will be greater than `keyWindowWidth`. If yes, there is no sence to use scrollView 
+     because inner content is not scrollable. In this case, returns true as well
+     Returning false means that content should be scrollable 
+     */
+    fileprivate var willEvenlySpaceItemsHorizontally: Bool {
+        if self.shouldEvenlySpaceItemsHorizontally {
+            return true
+        }
+        let itemsWidth = self.titles.enumerated().reduce(0.0) { (buffer, item) -> CGFloat in
+            let (index, title) = item
+            let attributes = index == 0 ? selectedTextAttributes : unselectedTextAttributes
+            let string = NSAttributedString(string: title, attributes: attributes)
+            let itemWidth = string.size().width + 2 * self.horizontalMarginForTitles
+            return buffer + itemWidth
+        }
+        let totalWidth = itemsWidth + CGFloat(self.titles.count - 1) * self.offsetBetweenTitles
+        return totalWidth < self.keyWindowWidth
+    }
+    
     init() {
         backgroundColor = .clear
         selectedBackgroundColor = .clear
@@ -88,7 +110,7 @@ public struct YSSegmentedControlViewState {
         itemTopPadding = 0
         selectorOffsetFromLabel = nil
         offsetBetweenTitles = 48
-        marginForTitles = 0
+        horizontalMarginForTitles = 0
         shouldEvenlySpaceItemsHorizontally = false
         shouldSelectorBeSameWidthAsText = false
         keyWindowWidth = UIApplication.shared.keyWindow?.frame.width ?? UIScreen.main.bounds.width
@@ -271,19 +293,6 @@ public class YSSegmentedControl: UIView {
      */
     fileprivate let horizontalScrollViewConstrainingView = UIView()
     
-    fileprivate var willEvenlySpaceItemsHorizontally: Bool {
-        if self.viewState.shouldEvenlySpaceItemsHorizontally {
-            return true
-        }
-        let itemsWidth = self.items.reduce(0.0) { (buffer, item) -> CGFloat in
-            let string = NSAttributedString(string: item.viewState.title, attributes: item.viewState.titleAttributes)
-            let itemWidth = string.size().width + 2 * self.viewState.marginForTitles
-            return buffer + itemWidth
-        }
-        let totalWidth = itemsWidth + CGFloat(self.items.count - 1) * self.viewState.offsetBetweenTitles
-        return totalWidth < self.viewState.keyWindowWidth
-    }
-    
     // MARK:- Init
     
     public init (frame: CGRect, viewState: YSSegmentedControlViewState? = nil, action: YSSegmentedControlAction? = nil) {
@@ -389,8 +398,8 @@ public class YSSegmentedControl: UIView {
             scrollView.addSubview(item)
             items.append(item)
         }
-
-        if willEvenlySpaceItemsHorizontally {
+        
+        if self.viewState.willEvenlySpaceItemsHorizontally {
             scrollView.addSubview(horizontalScrollViewConstrainingView)
             
             _ = horizontalScrollViewConstrainingView.makeConstraint(for: .height, equalTo: 0)
@@ -417,8 +426,8 @@ public class YSSegmentedControl: UIView {
             
             // First
             if index == 0 {
-                item.makeAttributesEqualToSuperview([.leading], offset: viewState.marginForTitles)
-                if willEvenlySpaceItemsHorizontally && !viewState.shouldSelectorBeSameWidthAsText {
+                item.makeAttributesEqualToSuperview([.leading], offset: viewState.horizontalMarginForTitles)
+                if self.viewState.willEvenlySpaceItemsHorizontally && !viewState.shouldSelectorBeSameWidthAsText {
                     item.makeAttribute(.width, equalTo: width)
                 }
             }
@@ -426,7 +435,7 @@ public class YSSegmentedControl: UIView {
             else {
                 let previousItem = items[index - 1]
                 
-                if willEvenlySpaceItemsHorizontally {
+                if self.viewState.willEvenlySpaceItemsHorizontally {
                     if !viewState.shouldSelectorBeSameWidthAsText {
                         item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing)
                         item.makeAttribute(.width, equalTo: width)
@@ -456,7 +465,7 @@ public class YSSegmentedControl: UIView {
                     }
                 }
                 else {
-                    item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing, constant: viewState.marginForTitles)
+                    item.makeAttribute(.leading, equalToOtherView: previousItem, attribute: .trailing, constant: viewState.horizontalMarginForTitles)
                 }
             }
             
@@ -505,14 +514,14 @@ public class YSSegmentedControl: UIView {
              Or, if that is set ot false, then don't add horizontal trailing
              offset to the last one, otherwise there is potentially unecessary scrolling.
              */
-            if self.willEvenlySpaceItemsHorizontally ||
+            if self.viewState.willEvenlySpaceItemsHorizontally ||
                 index == items.count - 1 {
                 viewState.horizontalTrailingOffset = 0
             }
             else {
                 viewState.horizontalTrailingOffset = self.viewState.offsetBetweenTitles
             }
-            viewState.labelHorizontalMargin = self.viewState.marginForTitles
+            viewState.labelHorizontalMargin = self.viewState.horizontalMarginForTitles
             
             item.viewState = viewState
         }
@@ -545,8 +554,8 @@ public class YSSegmentedControl: UIView {
         
         // scroll to the selected item if its bounds are out of the scrollview
         var selectedItemFrame = items[index].frame
-        selectedItemFrame.origin.x -= self.viewState.marginForTitles
-        selectedItemFrame.size.width += self.viewState.marginForTitles
+        selectedItemFrame.origin.x -= self.viewState.horizontalMarginForTitles
+        selectedItemFrame.size.width += self.viewState.horizontalMarginForTitles
         let scrollViewContentOffsetRightPoint = scrollView.contentOffset.x + scrollView.bounds.size.width
         let selectedItemFrameRightPoint = selectedItemFrame.origin.x + selectedItemFrame.size.width
         
