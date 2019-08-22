@@ -561,6 +561,11 @@ public class YSSegmentedControl: UIView {
         
         if selectedItemFrame.origin.x < scrollView.contentOffset.x ||
             scrollViewContentOffsetRightPoint < selectedItemFrameRightPoint {
+            var rectToScroll = selectedItemFrame
+            if index < items.count - 1 {
+                // scroll not to the last item, need to show a little bit the next item
+                rectToScroll.size.width += self.viewState.horizontalMarginForTitles * 2
+            }
             scrollView.scrollRectToVisible(selectedItemFrame, animated: animation)
         }
         
