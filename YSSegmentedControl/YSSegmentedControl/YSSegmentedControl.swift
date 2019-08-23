@@ -557,7 +557,7 @@ public class YSSegmentedControl: UIView {
         selectedItemFrame.origin.x -= self.viewState.horizontalMarginForTitles
         selectedItemFrame.size.width += self.viewState.horizontalMarginForTitles
         let scrollViewContentOffsetRightPoint = scrollView.contentOffset.x + scrollView.bounds.size.width
-        let selectedItemFrameRightPoint = selectedItemFrame.origin.x + selectedItemFrame.size.width
+        let selectedItemFrameRightPoint = selectedItemFrame.origin.x + selectedItemFrame.size.width + self.viewState.horizontalMarginForTitles * 2
         
         if selectedItemFrame.origin.x < scrollView.contentOffset.x ||
             scrollViewContentOffsetRightPoint < selectedItemFrameRightPoint {
@@ -566,7 +566,7 @@ public class YSSegmentedControl: UIView {
                 // scroll not to the last item, need to show a little bit the next item
                 rectToScroll.size.width += self.viewState.horizontalMarginForTitles * 2
             }
-            scrollView.scrollRectToVisible(selectedItemFrame, animated: animation)
+            scrollView.scrollRectToVisible(rectToScroll, animated: animation)
         }
         
         for item in items {
