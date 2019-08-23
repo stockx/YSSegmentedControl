@@ -554,19 +554,22 @@ public class YSSegmentedControl: UIView {
         
         // scroll to the selected item if its bounds are out of the scrollview
         var selectedItemFrame = items[index].frame
+        // add margins for the label
         selectedItemFrame.origin.x -= self.viewState.horizontalMarginForTitles
         selectedItemFrame.size.width += self.viewState.horizontalMarginForTitles
+        if index > 0 { // add tail to scroll to show a little bit previous item
+            selectedItemFrame.origin.x -= 2 * self.viewState.horizontalMarginForTitles
+            selectedItemFrame.size.width += 2 * self.viewState.horizontalMarginForTitles
+        }
+        if index < items.count - 1 { // add tail to scroll to show a little bit next item
+            selectedItemFrame.size.width += 2 * self.viewState.horizontalMarginForTitles
+        }
         let scrollViewContentOffsetRightPoint = scrollView.contentOffset.x + scrollView.bounds.size.width
-        let selectedItemFrameRightPoint = selectedItemFrame.origin.x + selectedItemFrame.size.width + self.viewState.horizontalMarginForTitles * 2
+        let selectedItemFrameRightPoint = selectedItemFrame.origin.x + selectedItemFrame.size.width
         
         if selectedItemFrame.origin.x < scrollView.contentOffset.x ||
             scrollViewContentOffsetRightPoint < selectedItemFrameRightPoint {
-            var rectToScroll = selectedItemFrame
-            if index < items.count - 1 {
-                // scroll not to the last item, need to show a little bit the next item
-                rectToScroll.size.width += self.viewState.horizontalMarginForTitles * 2
-            }
-            scrollView.scrollRectToVisible(rectToScroll, animated: animation)
+            scrollView.scrollRectToVisible(selectedItemFrame, animated: animation)
         }
         
         for item in items {
